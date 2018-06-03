@@ -50,12 +50,10 @@ if ( post_password_required() )
                         <?php endif; ?>
                     <div class="btn-group commentBtn" role="group">
                         <input name="submit" type="submit" id="submit" class="btn btn-sm btn-danger btn-block submit" tabindex="5" value="发表评论" />
-
                         <small class="onSubmit">
                             <?php cancel_comment_reply_link( '取消', '' ); ?>
                         </small>
-
-                        </div>
+                    </div>
                     <?php comment_id_fields(); ?>
                 </form>
             <?php endif; ?>

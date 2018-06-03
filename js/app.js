@@ -1,30 +1,30 @@
 (function() {
     var App = {
-        SetBodyColor:function(){
+        SetBodyColor: function() {
             var content = $('.page-content'),
                 isPage = content.attr('data-is'),
                 searchInput = $('#searchInput'),
                 setBgColor = $('body,#searchPopup,#nav-popup');
-            if(isPage == 'index'){
+            if (isPage == 'index') {
                 setBgColor.css({
                     background: 'rgba(0,0,0,1)'
                 });
-                searchInput.css('color',"#fff")
+                searchInput.css('color', "#fff")
                 $()
-            }else if(isPage == 'archive'){
+            } else if (isPage == 'archive') {
                 setBgColor.css({
                     background: 'rgba(242,242,242,1)'
                 });
-                searchInput.css('color',"#000")
-            }else if(isPage == 'single'){
+                searchInput.css('color', "#000")
+            } else if (isPage == 'single') {
                 setBgColor.css({
                     background: 'rgba(242,242,242,1)'
                 });
-                searchInput.css('color',"#000")
+                searchInput.css('color', "#000")
             }
         },
-        MyMacy:function(){
-            if(document.getElementById('post-list')){
+        MyMacy: function() {
+            if (document.getElementById('post-list')) {
                 macy = Macy({
                     container: '#post-list',
                     trueOrder: false,
@@ -32,23 +32,31 @@
                     margin: 20,
                     columns: 3,
                     breakAt: {
-                        768:{
-                          columns: 1,
-                          margin: 10,
+                        600: {
+                            columns: 1,
+                            margin: 10,
                         },
-                        920:{
-                          columns: 2,
-                          margin: 15,
+                        920: {
+                            columns: 2,
+                            margin: 15,
                         }
                     }
                 });
             }
         },
+        PublicData: function() {
+            // 图片灯箱配置
+            $(".blog-article-content img").each(function() {
+                var strA = "<a href='" + this.src + "' class='image-link wow bounceInUp onPjax'></a>";
+                $(this).wrap(strA);
+            });
+            $('.image-link').magnificPopup({ type: 'image' });
+        },
         Window: function() {
-            // 禁止复制
-            document.onselectstart = function() {
-                return false;
-            }
+            // // 禁止复制
+            // document.onselectstart = function() {
+            //     return false;
+            // }
             // 滚动特效配置
             var wow = new WOW({
                 boxClass: 'wow',
@@ -58,65 +66,59 @@
                 live: true
             });
             wow.init();
-
-            // 图片懒加载配置
-            $("img.lazy").lazyload({
-                effect: "fadeIn"
-            });
-
-            // 图片灯箱配置
-            $(".blog-article-content img").each(function() {
-                var strA = "<a href='" + this.src + "' class='image-link wow bounceInUp onPjax'></a>";
-                $(this).wrap(strA);
-            });
-            $('.image-link').magnificPopup({ type: 'image' });
-
             // 首页轮播图配置
             var mySwiper = new Swiper('.swiper-container', {
                 loop: true,
                 pagination: '.swiper-pagination',
                 autoplay: 5000
             });
-            // 瀑布流
 
             // PJAX
             $(document).pjax('a[target!=_blank][class!=onPjax]', '.Pjax-content', {
-                        fragment: '.Pjax-content',
-                        timeout: 1300
-                    });
-                    $(document).on('pjax:send', function() {
-                        NProgress.start();
-
-                    });
-                    $(document).on('pjax:complete', function() {
-                        NProgress.done();
-                        App.SetBodyColor();
-                        App.MyMacy();
-                        App.ListAjax();
-                        App.Popup.OnPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look')
-                        App.Popup.OnPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look')
-                    });
+                fragment: '.Pjax-content',
+                timeout: 1300
+            });
+            $(document).on('pjax:send', function() {
+                NProgress.start();
+            });
+            $(document).on('pjax:complete', function() {
+                NProgress.done();
+                App.SetBodyColor();
+                App.Comment();
+                App.MyMacy();
+                App.ListAjax();
+                commentsAjax();
+                App.PublicData();
+                ajax_comment();
+                $('.buttomBg').removeClass('buttomBg-look');
+                OnPopup();
+            });
         },
         //     点击id   弹窗id   点前图标  点后图标    弹窗显示动画
-        Popup:{
-            ClickPopup:function(clickId, popupId, iconQClass, iconHClass, lookClass) {
+        Popup: {
+            ClickPopup: function(clickId, popupId, iconQClass, iconHClass, lookClass) {
                 var menu = $(clickId),
-                    Popup = $(popupId);
+                    Popup = $(popupId),
+                    buttomBg = $('.buttomBg');
                 menu.on('click', function() {
-                    if (menu.attr('data-open') == 'false'){
+                    if (menu.attr('data-open') == 'false') {
+                        buttomBg.addClass('buttomBg-look');
                         menu.attr('data-open', 'true').removeClass(iconQClass).addClass(iconHClass);
                         Popup.addClass(lookClass)
                     } else {
+                        buttomBg.removeClass('buttomBg-look');
                         menu.attr('data-open', 'false').removeClass(iconHClass).addClass(iconQClass);
                         Popup.removeClass(lookClass)
                     }
                 })
             },
-            OnPopup:function(clickId, popupId, iconQClass, iconHClass, lookClass){
-                    var menu = $(clickId),
-                        Popup = $(popupId);
-                            menu.attr('data-open', 'false').removeClass(iconHClass).addClass(iconQClass);
-                            Popup.removeClass(lookClass)
+            OnPopup: function(clickId, popupId, iconQClass, iconHClass, lookClass) {
+                var menu = $(clickId),
+                    Popup = $(popupId),
+                    buttomBg = $('.buttomBg');
+                menu.attr('data-open', 'false').removeClass(iconHClass).addClass(iconQClass);
+                Popup.removeClass(lookClass);
+
             }
         },
         Scroll: function(BgImgId, BgCssClass) {
@@ -175,32 +177,49 @@
 
         }
     };
-    App.SetBodyColor();
-    App.MyMacy();
-    App.Window();
+    // 展开弹窗
+    App.Popup.ClickPopup('#comments', '#share-popup', 'icon-smile', 'icon-close', 'share-popup-look');
     App.Popup.ClickPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look');
-    // 展开弹窗1时，关闭其他弹窗
-    $('#menu').on('click',function(){
-        App.Popup.OnPopup('#search', '#searchPopup', 'icon-search', 'icon-close', 'searchPopup-look')
-    })
     App.Popup.ClickPopup('#search', '#searchPopup', 'icon-search', 'icon-close', 'searchPopup-look');
-    // 展开弹窗2时，关闭其他弹窗
-    $('#search').on('click',function(){
+    // 关闭弹窗
+    function OnPopup(){
         App.Popup.OnPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look')
+        App.Popup.OnPopup('#search', '#searchPopup', 'icon-search', 'icon-close', 'searchPopup-look')
+        App.Popup.OnPopup('#comments', '#share-popup', 'icon-smile', 'icon-close', 'share-popup-look')
+    }
+    $('.header-right ul li').each(function() {
+        $(this).on('click', 'span', function(e) {
+            if (e.target.id == 'comments') {
+                App.Popup.OnPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look')
+                App.Popup.OnPopup('#search', '#searchPopup', 'icon-search', 'icon-close', 'searchPopup-look')
+            } else if (e.target.id == 'menu') {
+                App.Popup.OnPopup('#search', '#searchPopup', 'icon-search', 'icon-close', 'searchPopup-look')
+                App.Popup.OnPopup('#comments', '#share-popup', 'icon-smile', 'icon-close', 'share-popup-look')
+            } else if (e.target.id == 'search') {
+                App.Popup.OnPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look')
+                App.Popup.OnPopup('#comments', '#share-popup', 'icon-smile', 'icon-close', 'share-popup-look')
+            }
+        })
+    });
+    // 点击黑罩关闭弹窗
+    $('.buttomBg').on('click',function(){
+        OnPopup();
+        $(this).removeClass('buttomBg-look')
     })
-    App.ListAjax();
-    App.Comment();
 
 
     // 滚动条事件
     $(window).scroll(function(e) {
         App.Scroll('.blog-bg', 'blog-bg-opacity');
     });
-
-
-
+    App.ListAjax();
+    App.Comment();
+    App.PublicData();
+    App.SetBodyColor();
+    App.MyMacy();
+    App.Window();
     commentsAjax();
-
+    ajax_comment();
     function commentsAjax() {
         $body = (window.opera) ? (document.compatMode == "CSS1Compat" ? $('html') : $('body')) : $('html,body');
         $('#navigation a').on('click', function(e) {
@@ -228,9 +247,6 @@
             });
         });
     }
-
-    ajax_comment();
-
     function ajax_comment() {
         var i = 0,
             got = -1,

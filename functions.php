@@ -1,4 +1,10 @@
 <?php
+require get_template_directory() . '/ashuwp_framework/ashuwp_framework_core.php'; //加载ashuwp_framework框架
+require get_template_directory() . '/ashuwp_framework/config-example.php'; //加载配置数据，config-example.php为配置范例。
+// 主题字段重定义
+
+define("IMMOVABLE",get_option('ashuwp_Immovable'));
+
 add_theme_support('post-thumbnails');
     register_nav_menus(array(
         'top' => '顶部菜单'
@@ -62,6 +68,67 @@ function disable_emojis_tinymce($plugins) {
         return array();
     }
 }
+// 文章内调用文章
+function xx_insert_posts($atts, $content = null) {
+    extract(shortcode_atts(array(
+        'ids' => ''
+    ) , $atts));
+    global $post;
+    $content = '';
+    $postids = explode(',', $ids);
+    $inset_posts = get_posts(array(
+        'post__in' => $postids
+    ));
+    foreach ($inset_posts as $key => $post) {
+        setup_postdata($post);
+        $content.= '<div class="wp-embed-post"><a target="_blank" href="' . get_permalink() . '">';
+        if (catch_that_image()) {
+            $content.= '<div class="wp-embed-img"><img src="' . catch_that_image() . '" alt=""></div>';
+        };
+        $content.= '<div class="wp-embed-content"><div><p class="wp-embed-post-heading">' . wp_trim_words(get_the_title() , 22) . '
+            </p>
+            <div class="wp-embed-post-excerpt">' . wp_trim_words(get_the_content() , 100, '...') . '</div>
+        </div>
+      </div>
+    </a>
+</div>';
+    }
+    wp_reset_postdata();
+    return $content;
+}
+add_shortcode('stayma_get_post', 'xx_insert_posts');
+// 评论后可见
+function reply_to_read($atts, $content = null) {
+    extract(shortcode_atts(array(
+        "notice" => '<p class="reply-to-read">温馨提示: 此处内容需要<span id="commentLook"><a href="#respond" title="评论本文">评论本文</a></span>并刷新后才能查看.</p>'
+    ) , $atts));
+    $email = null;
+    $user_ID = (int)wp_get_current_user()->ID;
+    if ($user_ID > 0) {
+        $email = get_userdata($user_ID)->user_email;
+        //对博主直接显示内容
+        $admin_email = 'abc@qq.com'; //博主Email
+        if ($email == $admin_email) {
+            return $content;
+        }
+    } else if (isset($_COOKIE['comment_author_email_' . COOKIEHASH])) {
+        $email = str_replace('%40', '@', $_COOKIE['comment_author_email_' . COOKIEHASH]);
+    } else {
+        return $notice;
+    }
+    if (empty($email)) {
+        return $notice;
+    }
+    global $wpdb;
+    $post_id = get_the_ID();
+    $query = "SELECT `comment_ID` FROM {$wpdb->comments} WHERE `comment_post_ID`={$post_id} and `comment_approved`='1' and `comment_author_email`='{$email}' LIMIT 1";
+    if ($wpdb->get_results($query)) {
+        return do_shortcode($content);
+    } else {
+        return $notice;
+    }
+}
+add_shortcode('reply', 'reply_to_read');
 //移除菜单的多余CSS选择器
 add_filter('nav_menu_css_class', 'my_css_attributes_filter', 100, 1);
 add_filter('nav_menu_item_id', 'my_css_attributes_filter', 100, 1);
@@ -69,18 +136,23 @@ add_filter('page_css_class', 'my_css_attributes_filter', 100, 1);
 function my_css_attributes_filter($var) {
     return is_array($var) ? array() : '';
 }
-//获取文章第一张图片
+
 function catch_that_image() {
-    global $post, $posts;
-    $first_img = '';
-    ob_start();
-    ob_end_clean();
-    $output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
-    $first_img = $matches[1][0];
-    if (empty($first_img)) {
-        return false;
-    }
-    return $first_img;
+  global $post, $posts;
+  $first_img = '';
+  ob_start();
+  ob_end_clean();
+  $output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
+  //获取文章中第一张图片的路径并输出
+  $first_img = $matches [1] [0];
+  //如果文章无图片，获取自定义图片
+  if(empty($first_img)){
+    $random = mt_rand(1, 4);
+      $first_img = get_template_directory_uri().'/img/bg-'.$random.'.jpg';
+   
+  //请自行设置一张default.jpg图片
+  }
+return $first_img;
 }
 // 下一篇文章
 function nav_link_with_thumb(){
@@ -102,8 +174,40 @@ function nav_link_with_thumb(){
          }
          echo $output;
 }
+// 回复评论添加@
+function idevs_comment_add_at($comment_text, $comment = '') {
+    if ($comment->comment_parent > 0) {
+        $comment_text = '<span id="AtName">@</span><a id="AtName" href="#comment-' . $comment->comment_parent . '">' . get_comment_author($comment->comment_parent) . '</a> ' . $comment_text;
+    }
+    return $comment_text;
+}
+add_filter('comment_text', 'idevs_comment_add_at', 20, 2);
+
+
+
+
 
 ?>
+<?php 
+//添加HTML编辑器自定义快捷标签按钮
+add_action('after_wp_tiny_mce', 'add_button_mce');
+function add_button_mce($mce_settings) {
+?>
+<script type="text/javascript">
+    QTags.addButton( 'hr', 'hr', "\n<hr />\n", "" );
+    QTags.addButton( 'quote', '引用文章', "\n[stayma_get_post ids=??????]\n", "" );
+    QTags.addButton( 'd-html', 'HTML高亮', "\n<pre class=\"line-numbers language-html\"><code class=\"language-html\">", "</code></pre>\n" );
+    QTags.addButton( 'd-css', 'CSS高亮', "\n<pre class=\"line-numbers language-css\"><code class=\"language-css\">", "</code></pre>\n" );
+    QTags.addButton( 'd-javascript', 'javascript高亮', "\n<pre class=\"line-numbers language-javascript\"><code class=\"language-javascript\">", "</code></pre>\n" );
+    QTags.addButton( 'd-php', 'php高亮', "\n<pre class=\"line-numbers language-php\"><code class=\"language-php\">", "</code></pre>\n" );
+    QTags.addButton( 'commLook', '评论后可见', "[reply]", "[/reply]\n" );
+</script>
+<?php
+}; ?>
+
+
+
+
 <?php
 //自定义评论列表模板
 function simple_comment($comment, $args, $depth) {

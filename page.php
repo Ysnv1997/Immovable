@@ -1,13 +1,8 @@
 <?php get_header(); ?>
-<style>
-    body{
-        background:#f2f2f2;
-    }
-</style>
 <div class="Pjax-content">
-    <div class="page-content">
+    <div class="page-content" data-is='single'>
         <div class="blog">
-        	<?php if( have_posts() ){ the_post();?>
+            <?php if( have_posts() ){ the_post();?>
             <div class="blog-bg">
                 <div class="blog-bg-img" style="background:url();"></div>
             </div>
@@ -19,7 +14,7 @@
                     </header>
                     
                     <div class="blog-article-content">
-						<?php the_content(); ?>
+                        <?php the_content(); ?>
                     </div>
                     <footer class="blog-article-footer">
                         <p class="blog-article-over"><span class="over">感谢观看</span></p>
@@ -31,8 +26,8 @@
                     <?php } ?>
                     <div class="comments">
                         <div class="comments-butt" data-open="false">
-                            <span><?php echo number_format_i18n( get_comments_number() );?></span>
-                            评论
+                            <p><?php echo number_format_i18n( get_comments_number() );?></p>
+                            <span>评论</span>
                         </div>
                     </div>
                 </div>

@@ -9,12 +9,12 @@ Template Name: Home
             <div class="blog index">
                 <div class="index-info">
                     <div>
-                        <h1 class="index-info-name wow bounceInLeft">STAY MA</h1>
-                        <p class="index-info-word wow bounceInRight"> 一个蹩脚前端程序员的个人博客</p>
+                        <h1 class="index-info-name wow bounceInLeft"><?php echo IMMOVABLE['Immovable_index_h1'];?></h1>
+                        <p class="index-info-word wow bounceInRight"><?php echo IMMOVABLE['Immovable_index_p'];?></p>
                     </div>
                 </div>
                 <div class="blog-bg">
-                    <div class="blog-bg-img" style="background:url(<?php bloginfo('template_url'); ?>/img/2323.jpg);"></div>
+                    <div class="blog-bg-img" style="background:url(<?php echo IMMOVABLE['Immovable_index_bg'];?>);"></div>
                 </div>
             <!--内容-->
             <div class="content" id="content">
@@ -32,46 +32,54 @@ Template Name: Home
                 </div>
                 <!-- 首页文章分类 -->
                 <div class="index-list">
-                    <div class="list-itme wow bounceInUp"  style="background: url('<?php bloginfo('template_url'); ?>/img/2-2.jpg');">
-                        <a href="">
+                    <?php if (IMMOVABLE['Immovable_index_01']['Immovable_title']): ?>
+                        <div class="list-itme wow bounceInUp"  style="background: url('<?php echo IMMOVABLE['Immovable_index_01']['Immovable_url'];?>');">
+                            <a href="<?php echo IMMOVABLE['Immovable_index_01']['Immovable_link'];?>">
+                                <div class="list-itme-bg">
+                                    <div class="list-itme-content">
+                                        <h2><?php echo IMMOVABLE['Immovable_index_01']['Immovable_title'];?></h2>
+                                        <p><?php echo IMMOVABLE['Immovable_index_01']['Immovable_description'];?></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    <?php endif ?>
+                    <?php if (IMMOVABLE['Immovable_index_02']['Immovable_title']): ?>
+                    <div class="list-itme wow bounceInUp"  style="background: url('<?php echo IMMOVABLE['Immovable_index_02']['Immovable_url'];?>');">
+                        <a href="<?php echo IMMOVABLE['Immovable_index_02']['Immovable_link'];?>">
                             <div class="list-itme-bg">
                                 <div class="list-itme-content">
-                                    <h2>WORDPRESS Immovable 主题</h2>
-                                    <p>一个精美、优雅、丝滑的博客主题！</p>
+                                    <h2><?php echo IMMOVABLE['Immovable_index_02']['Immovable_title'];?></h2>
+                                    <p><?php echo IMMOVABLE['Immovable_index_02']['Immovable_description'];?></p>
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <div class="list-itme wow bounceInUp" style="background: url('<?php bloginfo('template_url'); ?>/img/2-3.jpg');">
-                        <a href="">
+                    <?php endif ?>
+                    <?php if (IMMOVABLE['Immovable_index_03']['Immovable_title']): ?>
+                    <div class="list-itme wow bounceInUp"  style="background: url('<?php echo IMMOVABLE['Immovable_index_03']['Immovable_url'];?>');">
+                        <a href="<?php echo IMMOVABLE['Immovable_index_03']['Immovable_link'];?>">
                             <div class="list-itme-bg">
                                 <div class="list-itme-content">
-                                    <h2>WORDPRESS STAY 主题</h2>
-                                    <p>一个精美、优雅、丝滑的博客主题！</p>
+                                    <h2><?php echo IMMOVABLE['Immovable_index_03']['Immovable_title'];?></h2>
+                                    <p><?php echo IMMOVABLE['Immovable_index_03']['Immovable_description'];?></p>
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <div class="list-itme wow bounceInUp" style="background: url('<?php bloginfo('template_url'); ?>/img/4-1.jpg');">
-                        <a href="">
+                    <?php endif ?>
+                    <?php if (IMMOVABLE['Immovable_index_04']['Immovable_title']): ?>
+                    <div class="list-itme wow bounceInUp"  style="background: url('<?php echo IMMOVABLE['Immovable_index_04']['Immovable_url'];?>');">
+                        <a href="<?php echo IMMOVABLE['Immovable_index_04']['Immovable_link'];?>">
                             <div class="list-itme-bg">
                                 <div class="list-itme-content">
-                                    <h2>关于我</h2>
-                                    <p>一个精美、优雅、丝滑的博客主题！</p>
+                                    <h2><?php echo IMMOVABLE['Immovable_index_04']['Immovable_title'];?></h2>
+                                    <p><?php echo IMMOVABLE['Immovable_index_04']['Immovable_description'];?></p>
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <div class="list-itme wow bounceInUp" style="background: url('<?php bloginfo('template_url'); ?>/img/4-3.jpg');">
-                        <a href="">
-                            <div class="list-itme-bg">
-                                <div class="list-itme-content">
-                                    <h2>WORDPRESS STAY MA主题</h2>
-                                    <p>一个精美、优雅、丝滑的博客主题！</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                    <?php endif ?>
                 </div>
             </div>
             </div>

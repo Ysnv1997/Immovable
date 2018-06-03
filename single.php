@@ -1,9 +1,4 @@
 <?php get_header(); ?>
-<style>
-    body{
-        background:#f2f2f2;
-    }
-</style>
 <div class="Pjax-content">
     <div class="page-content" data-is='single'>
         <div class="blog">
@@ -31,8 +26,8 @@
                     <?php } ?>
                     <div class="comments">
                         <div class="comments-butt" data-open="false">
-                            <span><?php echo number_format_i18n( get_comments_number() );?></span>
-                            评论
+                            <p><?php echo number_format_i18n( get_comments_number() );?></p>
+                            <span>评论</span>
                         </div>
                     </div>
                 </div>

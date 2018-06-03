@@ -95,7 +95,7 @@ $tmp_c = get_comment($tmp_c->comment_parent);
    <div class="comment-<?php comment_ID(); ?>">
       <div class="media comment-body" id="comment-<?php comment_ID(); ?>">
         <div class="media-left">
-            <?php if (function_exists('get_avatar') && get_option('show_avatars')) { echo get_avatar($comment, 48); } ?>
+            <?php if (function_exists('get_avatar') && get_option('show_avatars')) { echo get_avatar( $comment, 48 ); } ?>
         </div>
         <div class="media-body">
           <?php printf(__('<p class="author_name">%s 说：</p>'), get_comment_author_link()); ?>
