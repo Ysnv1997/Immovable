@@ -72,4 +72,7 @@
 <script src="<?php bloginfo('template_url'); ?>/js/jquery.pjax.js"></script>
 <script src="<?php bloginfo('template_url'); ?>/js/public.js"></script>
 <script src="<?php bloginfo('template_url'); ?>/js/app.js"></script>
+<script>
+    <?php echo IMMOVABLE['Immovable_script_js'];?>
+</script>
 </html>

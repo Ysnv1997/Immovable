@@ -62,6 +62,7 @@ html {
 
 .ashuwp_field .ashuwp_field_area {
   font-size: 20px;
+    float: left;
 }
 .ashuwp_field_area #input_upload[image]_preview img{
   max-width: 100px;
@@ -124,10 +125,12 @@ margin-bottom: 13px;
   height:auto;
 }
 .ashuwp_field .ashuwp_field_area p {
-  margin:0;
+  margin-top:10px;
+  font-size: 16px;
 }
 .ashuwp_field .ashuwp_field_area label {
   margin-right:15px;
+
 }
 .ashuwp_field input.ashuwp_field_input,
 .ashuwp_field textarea.ashuwp_field_textarea {

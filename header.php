@@ -25,6 +25,9 @@
     <meta name="description" content="<?php echo IMMOVABLE['Immovable_input_upload']['Immovable_description'];?>" />
     <meta name="keywords" content="<?php echo IMMOVABLE['Immovable_input_upload']['Immovable_keywords'];?>" />
 </head>
+<style>
+    <?php echo IMMOVABLE['Immovable_style_css'];?>
+</style>
 <body class="wow">
     <header id="header" class="header">
         <div class="headerContent">

@@ -88,6 +88,68 @@ $ashu_options[] = array(
         'std'  => 'www.stayma.cn',
         'type' => 'text'
       );
+
+
+  $ashu_options[] = array(
+    'name' => '首页幻灯片',
+    'id'   => 'Immovable_swiper',
+    'desc' => '',
+    'std'  => '',
+    'subtype' => array(
+     array(
+        'name'    => '是否开启幻灯片',
+        'id'      => 'Immovable_swiper_on',
+        'desc'    => '开启幻灯片则自动关闭图片',
+        'std'     => 'no',
+        'subtype' => array(
+          'yes'      => '开启',
+          'no'    => '关闭'
+        ),
+        'type'    => 'radio',
+        'multiple'    => false
+      ),
+     array(
+        'name' => '幻灯片图片1地址',
+        'id'   => 'Immovable_swiper_1',
+        'desc' => '幻灯片图片1地址',
+        'std'  => '',
+        'type' => 'upload'
+      ),
+     array(
+        'name' => '幻灯片图片2地址',
+        'id'   => 'Immovable_swiper_2',
+        'desc' => '幻灯片图片2地址',
+        'std'  => '',
+        'type' => 'upload'
+      ),
+     array(
+        'name' => '幻灯片图片3地址',
+        'id'   => 'Immovable_swiper_3',
+        'desc' => '幻灯片图片3地址',
+        'std'  => '',
+        'type' => 'upload'
+      ),
+     array(
+        'name' => '幻灯片图片4地址',
+        'id'   => 'Immovable_swiper_4',
+        'desc' => '幻灯片图片4地址',
+        'std'  => '',
+        'type' => 'upload'
+      ),
+
+
+
+
+
+
+    ),
+    'type' => 'group' //Look here.
+  );
+
+
+
+
+
   $ashu_options[] = array(
     'name' => '首页推荐区01',
     'id'   => 'Immovable_index_01',
@@ -298,9 +360,32 @@ $ashu_options[] = array(
     ),
     'type' => 'group' //Look here.
   );
+$ashu_options[] = array(
+  'name' => '',
+  'type' => 'close' //Look here
+);
 
 
 
+$ashu_options[] = array(
+  'name' => '其他设置',
+  'id'   => 'tab4_open',
+  'type' => 'open' //Look here
+);
+    $ashu_options[] = array(
+      'name' => '额外CSS设置',
+      'id'   => 'Immovable_style_css',
+      'desc' => '设置额外CSS。以内置style标签',
+      'std'  => '',
+      'type' => 'textarea'
+    );
+    $ashu_options[] = array(
+      'name' => '额外JS设置',
+      'id'   => 'Immovable_script_js',
+      'desc' => '设置额外JS。以内置scrip标签',
+      'std'  => '',
+      'type' => 'textarea'
+    );
 $ashu_options[] = array(
   'name' => '',
   'type' => 'close' //Look here

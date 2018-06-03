@@ -14,7 +14,38 @@ Template Name: Home
                     </div>
                 </div>
                 <div class="blog-bg">
-                    <div class="blog-bg-img" style="background:url(<?php echo IMMOVABLE['Immovable_index_bg'];?>);"></div>
+                    <?php if(IMMOVABLE['Immovable_swiper']['Immovable_swiper_on'] == 'no'): ?>
+                         <div class="blog-bg-img" style="background:url(<?php echo IMMOVABLE['Immovable_index_bg'];?>);"></div>
+                    <?php elseif(IMMOVABLE['Immovable_swiper']['Immovable_swiper_on'] == 'yes'): ?>
+
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                    <?php if(IMMOVABLE['Immovable_swiper']['Immovable_swiper_1']): ?>
+                        <div class="swiper-slide">
+                            <div class="swiper-slide-bg" style="background: url(<?php echo IMMOVABLE['Immovable_swiper']['Immovable_swiper_1']; ?>);"></div>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(IMMOVABLE['Immovable_swiper']['Immovable_swiper_2']): ?>
+                        <div class="swiper-slide">
+                            <div class="swiper-slide-bg" style="background: url(<?php echo IMMOVABLE['Immovable_swiper']['Immovable_swiper_2']; ?>);"></div>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(IMMOVABLE['Immovable_swiper']['Immovable_swiper_3']): ?>
+                        <div class="swiper-slide">
+                            <div class="swiper-slide-bg" style="background: url(<?php echo IMMOVABLE['Immovable_swiper']['Immovable_swiper_3']; ?>);"></div>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(IMMOVABLE['Immovable_swiper']['Immovable_swiper_4']): ?>
+                        <div class="swiper-slide">
+                            <div class="swiper-slide-bg" style="background: url(<?php echo IMMOVABLE['Immovable_swiper']['Immovable_swiper_4']; ?>);"></div>
+                        </div>
+                    <?php endif; ?>
+
+
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+                    <?php endif; ?>
                 </div>
             <!--内容-->
             <div class="content" id="content">
@@ -33,7 +64,7 @@ Template Name: Home
                 <!-- 首页文章分类 -->
                 <div class="index-list">
                     <?php if (IMMOVABLE['Immovable_index_01']['Immovable_title']): ?>
-                        <div class="list-itme wow bounceInUp"  style="background: url('<?php echo IMMOVABLE['Immovable_index_01']['Immovable_url'];?>');">
+                        <div class="list-itme wow fadeIn"  style="background: url('<?php echo IMMOVABLE['Immovable_index_01']['Immovable_url'];?>');">
                             <a href="<?php echo IMMOVABLE['Immovable_index_01']['Immovable_link'];?>">
                                 <div class="list-itme-bg">
                                     <div class="list-itme-content">
@@ -45,7 +76,7 @@ Template Name: Home
                         </div>
                     <?php endif ?>
                     <?php if (IMMOVABLE['Immovable_index_02']['Immovable_title']): ?>
-                    <div class="list-itme wow bounceInUp"  style="background: url('<?php echo IMMOVABLE['Immovable_index_02']['Immovable_url'];?>');">
+                    <div class="list-itme wow fadeIn"  style="background: url('<?php echo IMMOVABLE['Immovable_index_02']['Immovable_url'];?>');">
                         <a href="<?php echo IMMOVABLE['Immovable_index_02']['Immovable_link'];?>">
                             <div class="list-itme-bg">
                                 <div class="list-itme-content">
@@ -57,7 +88,7 @@ Template Name: Home
                     </div>
                     <?php endif ?>
                     <?php if (IMMOVABLE['Immovable_index_03']['Immovable_title']): ?>
-                    <div class="list-itme wow bounceInUp"  style="background: url('<?php echo IMMOVABLE['Immovable_index_03']['Immovable_url'];?>');">
+                    <div class="list-itme wow fadeIn"  style="background: url('<?php echo IMMOVABLE['Immovable_index_03']['Immovable_url'];?>');">
                         <a href="<?php echo IMMOVABLE['Immovable_index_03']['Immovable_link'];?>">
                             <div class="list-itme-bg">
                                 <div class="list-itme-content">
@@ -69,7 +100,7 @@ Template Name: Home
                     </div>
                     <?php endif ?>
                     <?php if (IMMOVABLE['Immovable_index_04']['Immovable_title']): ?>
-                    <div class="list-itme wow bounceInUp"  style="background: url('<?php echo IMMOVABLE['Immovable_index_04']['Immovable_url'];?>');">
+                    <div class="list-itme wow fadeIn"  style="background: url('<?php echo IMMOVABLE['Immovable_index_04']['Immovable_url'];?>');">
                         <a href="<?php echo IMMOVABLE['Immovable_index_04']['Immovable_link'];?>">
                             <div class="list-itme-bg">
                                 <div class="list-itme-content">

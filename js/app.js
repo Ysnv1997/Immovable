@@ -1,28 +1,5 @@
 (function() {
     var App = {
-        SetBodyColor: function() {
-            var content = $('.page-content'),
-                isPage = content.attr('data-is'),
-                searchInput = $('#searchInput'),
-                setBgColor = $('body,#searchPopup,#nav-popup');
-            if (isPage == 'index') {
-                setBgColor.css({
-                    background: 'rgba(0,0,0,1)'
-                });
-                searchInput.css('color', "#fff")
-                $()
-            } else if (isPage == 'archive') {
-                setBgColor.css({
-                    background: 'rgba(242,242,242,1)'
-                });
-                searchInput.css('color', "#000")
-            } else if (isPage == 'single') {
-                setBgColor.css({
-                    background: 'rgba(242,242,242,1)'
-                });
-                searchInput.css('color', "#000")
-            }
-        },
         MyMacy: function() {
             if (document.getElementById('post-list')) {
                 macy = Macy({
@@ -45,6 +22,12 @@
             }
         },
         PublicData: function() {
+            // 首页轮播图配置
+            var mySwiper = new Swiper('.swiper-container', {
+                loop: true,
+                pagination: '.swiper-pagination',
+                autoplay: 20000
+            });
             // 图片灯箱配置
             $(".blog-article-content img").each(function() {
                 var strA = "<a href='" + this.src + "' class='image-link wow bounceInUp onPjax'></a>";
@@ -66,13 +49,6 @@
                 live: true
             });
             wow.init();
-            // 首页轮播图配置
-            var mySwiper = new Swiper('.swiper-container', {
-                loop: true,
-                pagination: '.swiper-pagination',
-                autoplay: 5000
-            });
-
             // PJAX
             $(document).pjax('a[target!=_blank][class!=onPjax]', '.Pjax-content', {
                 fragment: '.Pjax-content',
@@ -83,7 +59,6 @@
             });
             $(document).on('pjax:complete', function() {
                 NProgress.done();
-                App.SetBodyColor();
                 App.Comment();
                 App.MyMacy();
                 App.ListAjax();
@@ -206,8 +181,9 @@
         OnPopup();
         $(this).removeClass('buttomBg-look')
     })
-
-
+    $(window).ready(function(){
+        $(this).scrollTop(0);
+    })
     // 滚动条事件
     $(window).scroll(function(e) {
         App.Scroll('.blog-bg', 'blog-bg-opacity');
@@ -215,7 +191,6 @@
     App.ListAjax();
     App.Comment();
     App.PublicData();
-    App.SetBodyColor();
     App.MyMacy();
     App.Window();
     commentsAjax();
