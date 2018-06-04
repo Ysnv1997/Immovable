@@ -1,51 +1,48 @@
-<?php   
-/*
-Template Name: Home
-*/  
-?>  
-<?php get_header(); ?>
+<?php get_header();?>
+<?php $IMMOVABLE = get_option('ashuwp_Immovable');?>
     <div class="Pjax-content">
         <div class="page-content" data-is='index'>
             <div class="blog index">
                 <div class="index-info">
                     <div>
-                        <h1 class="index-info-name wow bounceInLeft"><?php echo IMMOVABLE['Immovable_index_h1'];?></h1>
-                        <p class="index-info-word wow bounceInRight"><?php echo IMMOVABLE['Immovable_index_p'];?></p>
+                        <h1 class="index-info-name wow bounceInLeft">
+                            <?php echo $IMMOVABLE['Immovable_index_h1']; ?></h1>
+                        <p class="index-info-word wow bounceInRight"><?php echo $IMMOVABLE['Immovable_index_p']; ?></p>
                     </div>
                 </div>
                 <div class="blog-bg">
-                    <?php if(IMMOVABLE['Immovable_swiper']['Immovable_swiper_on'] == 'no'): ?>
-                         <div class="blog-bg-img" style="background:url(<?php echo IMMOVABLE['Immovable_index_bg'];?>);"></div>
-                    <?php elseif(IMMOVABLE['Immovable_swiper']['Immovable_swiper_on'] == 'yes'): ?>
+                    <?php if ($IMMOVABLE['Immovable_swiper']['Immovable_swiper_on'] == 'no'): ?>
+                         <div class="blog-bg-img" style="background:url(<?php echo $IMMOVABLE['Immovable_index_bg']; ?>);"></div>
+                    <?php elseif ($IMMOVABLE['Immovable_swiper']['Immovable_swiper_on'] == 'yes'): ?>
 
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                    <?php if(IMMOVABLE['Immovable_swiper']['Immovable_swiper_1']): ?>
+                    <?php if ($IMMOVABLE['Immovable_swiper']['Immovable_swiper_1']): ?>
                         <div class="swiper-slide">
-                            <div class="swiper-slide-bg" style="background: url(<?php echo IMMOVABLE['Immovable_swiper']['Immovable_swiper_1']; ?>);"></div>
+                            <div class="swiper-slide-bg" style="background: url(<?php echo $IMMOVABLE['Immovable_swiper']['Immovable_swiper_1']; ?>);"></div>
                         </div>
-                    <?php endif; ?>
-                    <?php if(IMMOVABLE['Immovable_swiper']['Immovable_swiper_2']): ?>
+                    <?php endif;?>
+                    <?php if ($IMMOVABLE['Immovable_swiper']['Immovable_swiper_2']): ?>
                         <div class="swiper-slide">
-                            <div class="swiper-slide-bg" style="background: url(<?php echo IMMOVABLE['Immovable_swiper']['Immovable_swiper_2']; ?>);"></div>
+                            <div class="swiper-slide-bg" style="background: url(<?php echo $IMMOVABLE['Immovable_swiper']['Immovable_swiper_2']; ?>);"></div>
                         </div>
-                    <?php endif; ?>
-                    <?php if(IMMOVABLE['Immovable_swiper']['Immovable_swiper_3']): ?>
+                    <?php endif;?>
+                    <?php if ($IMMOVABLE['Immovable_swiper']['Immovable_swiper_3']): ?>
                         <div class="swiper-slide">
-                            <div class="swiper-slide-bg" style="background: url(<?php echo IMMOVABLE['Immovable_swiper']['Immovable_swiper_3']; ?>);"></div>
+                            <div class="swiper-slide-bg" style="background: url(<?php echo $IMMOVABLE['Immovable_swiper']['Immovable_swiper_3']; ?>);"></div>
                         </div>
-                    <?php endif; ?>
-                    <?php if(IMMOVABLE['Immovable_swiper']['Immovable_swiper_4']): ?>
+                    <?php endif;?>
+                    <?php if ($IMMOVABLE['Immovable_swiper']['Immovable_swiper_4']): ?>
                         <div class="swiper-slide">
-                            <div class="swiper-slide-bg" style="background: url(<?php echo IMMOVABLE['Immovable_swiper']['Immovable_swiper_4']; ?>);"></div>
+                            <div class="swiper-slide-bg" style="background: url(<?php echo $IMMOVABLE['Immovable_swiper']['Immovable_swiper_4']; ?>);"></div>
                         </div>
-                    <?php endif; ?>
+                    <?php endif;?>
 
 
                     </div>
                     <div class="swiper-pagination"></div>
                 </div>
-                    <?php endif; ?>
+                    <?php endif;?>
                 </div>
             <!--内容-->
             <div class="content" id="content">
@@ -63,58 +60,58 @@ Template Name: Home
                 </div>
                 <!-- 首页文章分类 -->
                 <div class="index-list">
-                    <?php if (IMMOVABLE['Immovable_index_01']['Immovable_title']): ?>
-                        <div class="list-itme wow fadeIn"  style="background: url('<?php echo IMMOVABLE['Immovable_index_01']['Immovable_url'];?>');">
-                            <a href="<?php echo IMMOVABLE['Immovable_index_01']['Immovable_link'];?>">
+                    <?php if ($IMMOVABLE['Immovable_index_01']['Immovable_title']): ?>
+                        <div class="list-itme wow fadeIn"  style="background: url('<?php echo $IMMOVABLE['Immovable_index_01']['Immovable_url']; ?>');">
+                            <a href="<?php echo $IMMOVABLE['Immovable_index_01']['Immovable_link']; ?>">
                                 <div class="list-itme-bg">
                                     <div class="list-itme-content">
-                                        <h2><?php echo IMMOVABLE['Immovable_index_01']['Immovable_title'];?></h2>
-                                        <p><?php echo IMMOVABLE['Immovable_index_01']['Immovable_description'];?></p>
+                                        <h2><?php echo $IMMOVABLE['Immovable_index_01']['Immovable_title']; ?></h2>
+                                        <p><?php echo $IMMOVABLE['Immovable_index_01']['Immovable_description']; ?></p>
                                     </div>
                                 </div>
                             </a>
                         </div>
-                    <?php endif ?>
-                    <?php if (IMMOVABLE['Immovable_index_02']['Immovable_title']): ?>
-                    <div class="list-itme wow fadeIn"  style="background: url('<?php echo IMMOVABLE['Immovable_index_02']['Immovable_url'];?>');">
-                        <a href="<?php echo IMMOVABLE['Immovable_index_02']['Immovable_link'];?>">
+                    <?php endif?>
+                    <?php if ($IMMOVABLE['Immovable_index_02']['Immovable_title']): ?>
+                    <div class="list-itme wow fadeIn"  style="background: url('<?php echo $IMMOVABLE['Immovable_index_02']['Immovable_url']; ?>');">
+                        <a href="<?php echo $IMMOVABLE['Immovable_index_02']['Immovable_link']; ?>">
                             <div class="list-itme-bg">
                                 <div class="list-itme-content">
-                                    <h2><?php echo IMMOVABLE['Immovable_index_02']['Immovable_title'];?></h2>
-                                    <p><?php echo IMMOVABLE['Immovable_index_02']['Immovable_description'];?></p>
+                                    <h2><?php echo $IMMOVABLE['Immovable_index_02']['Immovable_title']; ?></h2>
+                                    <p><?php echo $IMMOVABLE['Immovable_index_02']['Immovable_description']; ?></p>
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <?php endif ?>
-                    <?php if (IMMOVABLE['Immovable_index_03']['Immovable_title']): ?>
-                    <div class="list-itme wow fadeIn"  style="background: url('<?php echo IMMOVABLE['Immovable_index_03']['Immovable_url'];?>');">
-                        <a href="<?php echo IMMOVABLE['Immovable_index_03']['Immovable_link'];?>">
+                    <?php endif?>
+                    <?php if ($IMMOVABLE['Immovable_index_03']['Immovable_title']): ?>
+                    <div class="list-itme wow fadeIn"  style="background: url('<?php echo $IMMOVABLE['Immovable_index_03']['Immovable_url']; ?>');">
+                        <a href="<?php echo $IMMOVABLE['Immovable_index_03']['Immovable_link']; ?>">
                             <div class="list-itme-bg">
                                 <div class="list-itme-content">
-                                    <h2><?php echo IMMOVABLE['Immovable_index_03']['Immovable_title'];?></h2>
-                                    <p><?php echo IMMOVABLE['Immovable_index_03']['Immovable_description'];?></p>
+                                    <h2><?php echo $IMMOVABLE['Immovable_index_03']['Immovable_title']; ?></h2>
+                                    <p><?php echo $IMMOVABLE['Immovable_index_03']['Immovable_description']; ?></p>
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <?php endif ?>
-                    <?php if (IMMOVABLE['Immovable_index_04']['Immovable_title']): ?>
-                    <div class="list-itme wow fadeIn"  style="background: url('<?php echo IMMOVABLE['Immovable_index_04']['Immovable_url'];?>');">
-                        <a href="<?php echo IMMOVABLE['Immovable_index_04']['Immovable_link'];?>">
+                    <?php endif?>
+                    <?php if ($IMMOVABLE['Immovable_index_04']['Immovable_title']): ?>
+                    <div class="list-itme wow fadeIn"  style="background: url('<?php echo $IMMOVABLE['Immovable_index_04']['Immovable_url']; ?>');">
+                        <a href="<?php echo $IMMOVABLE['Immovable_index_04']['Immovable_link']; ?>">
                             <div class="list-itme-bg">
                                 <div class="list-itme-content">
-                                    <h2><?php echo IMMOVABLE['Immovable_index_04']['Immovable_title'];?></h2>
-                                    <p><?php echo IMMOVABLE['Immovable_index_04']['Immovable_description'];?></p>
+                                    <h2><?php echo $IMMOVABLE['Immovable_index_04']['Immovable_title']; ?></h2>
+                                    <p><?php echo $IMMOVABLE['Immovable_index_04']['Immovable_description']; ?></p>
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <?php endif ?>
+                    <?php endif?>
                 </div>
             </div>
             </div>
         </div>
     </div>
 
-<?php get_footer(); ?>
+<?php get_footer();?>

@@ -1,200 +1,3 @@
-(function() {
-    var App = {
-        MyMacy: function() {
-            if (document.getElementById('post-list')) {
-                macy = Macy({
-                    container: '#post-list',
-                    trueOrder: false,
-                    waitForImages: false,
-                    margin: 20,
-                    columns: 3,
-                    breakAt: {
-                        600: {
-                            columns: 1,
-                            margin: 10,
-                        },
-                        920: {
-                            columns: 2,
-                            margin: 15,
-                        }
-                    }
-                });
-            }
-        },
-        PublicData: function() {
-            // 首页轮播图配置
-            var mySwiper = new Swiper('.swiper-container', {
-                loop: true,
-                pagination: '.swiper-pagination',
-                autoplay: 20000
-            });
-            // 图片灯箱配置
-            $(".blog-article-content img").each(function() {
-                var strA = "<a href='" + this.src + "' class='image-link wow bounceInUp onPjax'></a>";
-                $(this).wrap(strA);
-            });
-            $('.image-link').magnificPopup({ type: 'image' });
-        },
-        Window: function() {
-            // // 禁止复制
-            // document.onselectstart = function() {
-            //     return false;
-            // }
-            // 滚动特效配置
-            var wow = new WOW({
-                boxClass: 'wow',
-                animateClass: 'animated',
-                offset: 0,
-                mobile: true,
-                live: true
-            });
-            wow.init();
-            // PJAX
-            $(document).pjax('a[target!=_blank][class!=onPjax]', '.Pjax-content', {
-                fragment: '.Pjax-content',
-                timeout: 1300
-            });
-            $(document).on('pjax:send', function() {
-                NProgress.start();
-            });
-            $(document).on('pjax:complete', function() {
-                NProgress.done();
-                App.Comment();
-                App.MyMacy();
-                App.ListAjax();
-                commentsAjax();
-                App.PublicData();
-                ajax_comment();
-                $('.buttomBg').removeClass('buttomBg-look');
-                OnPopup();
-            });
-        },
-        //     点击id   弹窗id   点前图标  点后图标    弹窗显示动画
-        Popup: {
-            ClickPopup: function(clickId, popupId, iconQClass, iconHClass, lookClass) {
-                var menu = $(clickId),
-                    Popup = $(popupId),
-                    buttomBg = $('.buttomBg');
-                menu.on('click', function() {
-                    if (menu.attr('data-open') == 'false') {
-                        buttomBg.addClass('buttomBg-look');
-                        menu.attr('data-open', 'true').removeClass(iconQClass).addClass(iconHClass);
-                        Popup.addClass(lookClass)
-                    } else {
-                        buttomBg.removeClass('buttomBg-look');
-                        menu.attr('data-open', 'false').removeClass(iconHClass).addClass(iconQClass);
-                        Popup.removeClass(lookClass)
-                    }
-                })
-            },
-            OnPopup: function(clickId, popupId, iconQClass, iconHClass, lookClass) {
-                var menu = $(clickId),
-                    Popup = $(popupId),
-                    buttomBg = $('.buttomBg');
-                menu.attr('data-open', 'false').removeClass(iconHClass).addClass(iconQClass);
-                Popup.removeClass(lookClass);
-
-            }
-        },
-        Scroll: function(BgImgId, BgCssClass) {
-            var iBgCo = $(BgImgId)
-            scrollTop = $(window).scrollTop();
-            if (scrollTop == '0') {
-                iBgCo.removeClass(BgCssClass)
-            } else if (scrollTop = 80) {
-                iBgCo.addClass(BgCssClass)
-            }
-        },
-        ListAjax: function() {
-
-            var nextButt = $('#listAjax'),
-                list = $('#post-list');
-            // 处理加载pjax冲突
-            $('#listAjax a').addClass('onPjax');
-            nextButt.on('click', 'a', function() {
-                var _herf = this.href;
-                if (_herf != undefined) {
-                    $.ajax({
-                        url: _herf,
-                        type: "get",
-                        beforeSend: function() {},
-                        error: function(request) {},
-                        success: function(data) {
-                            var $res = $(data).find("#post");
-                            $('#post-list').append($res);
-                            macy.runOnImageLoad(function() {
-                                macy.recalculate(true);
-                            }, true);
-                            var newhref = $(data).find('#listAjax > a').attr("href");
-                            if (newhref != undefined) {
-                                $('#listAjax > a').attr("href", newhref);
-                            } else {
-                                $('#listAjax > a').hide();
-                            }
-                        }
-                    });
-                }
-                return false;
-            })
-        },
-        Comment: function() {
-            var commBut = $('.comments-butt'),
-                commCon = $('.comment-content');
-            commBut.on('click', function() {
-                if ($(this).attr('data-open') == 'false') {
-                    $(this).attr('data-open', 'true');
-                    commCon.fadeIn(600);
-                } else {
-                    $(this).attr('data-open', 'false');
-                    commCon.fadeOut(600);
-                }
-            })
-
-        }
-    };
-    // 展开弹窗
-    App.Popup.ClickPopup('#comments', '#share-popup', 'icon-smile', 'icon-close', 'share-popup-look');
-    App.Popup.ClickPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look');
-    App.Popup.ClickPopup('#search', '#searchPopup', 'icon-search', 'icon-close', 'searchPopup-look');
-    // 关闭弹窗
-    function OnPopup(){
-        App.Popup.OnPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look')
-        App.Popup.OnPopup('#search', '#searchPopup', 'icon-search', 'icon-close', 'searchPopup-look')
-        App.Popup.OnPopup('#comments', '#share-popup', 'icon-smile', 'icon-close', 'share-popup-look')
-    }
-    $('.header-right ul li').each(function() {
-        $(this).on('click', 'span', function(e) {
-            if (e.target.id == 'comments') {
-                App.Popup.OnPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look')
-                App.Popup.OnPopup('#search', '#searchPopup', 'icon-search', 'icon-close', 'searchPopup-look')
-            } else if (e.target.id == 'menu') {
-                App.Popup.OnPopup('#search', '#searchPopup', 'icon-search', 'icon-close', 'searchPopup-look')
-                App.Popup.OnPopup('#comments', '#share-popup', 'icon-smile', 'icon-close', 'share-popup-look')
-            } else if (e.target.id == 'search') {
-                App.Popup.OnPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look')
-                App.Popup.OnPopup('#comments', '#share-popup', 'icon-smile', 'icon-close', 'share-popup-look')
-            }
-        })
-    });
-    // 点击黑罩关闭弹窗
-    $('.buttomBg').on('click',function(){
-        OnPopup();
-        $(this).removeClass('buttomBg-look')
-    })
-    $(window).ready(function(){
-        $(this).scrollTop(0);
-    })
-    // 滚动条事件
-    $(window).scroll(function(e) {
-        App.Scroll('.blog-bg', 'blog-bg-opacity');
-    });
-    App.ListAjax();
-    App.Comment();
-    App.PublicData();
-    App.MyMacy();
-    App.Window();
-    commentsAjax();
-    ajax_comment();
     function commentsAjax() {
         $body = (window.opera) ? (document.compatMode == "CSS1Compat" ? $('html') : $('body')) : $('html,body');
         $('#navigation a').on('click', function(e) {
@@ -366,6 +169,197 @@
             }
         };
     }
+    var App = {
+        MyMacy: function() {
+            if (document.getElementById('post-list')) {
+                macy = Macy({
+                    container: '#post-list',
+                    trueOrder: false,
+                    waitForImages: false,
+                    margin: 20,
+                    columns: 3,
+                    breakAt: {
+                        600: {
+                            columns: 1,
+                            margin: 10,
+                        },
+                        920: {
+                            columns: 2,
+                            margin: 15,
+                        }
+                    }
+                });
+            }
+        },
+        PublicData: function() {
+            // 首页轮播图配置
+            var mySwiper = new Swiper('.swiper-container', {
+                loop: true,
+                pagination: '.swiper-pagination',
+                autoplay: 20000
+            });
+            // 图片灯箱配置
+            $(".blog-article-content img").each(function() {
+                var strA = "<a href='" + this.src + "' class='image-link wow fadeIn onPjax'></a>";
+                $(this).wrap(strA);
+            });
+            $('.image-link').magnificPopup({ type: 'image' });
+        },
+        Window: function() {
+            // 滚动特效配置
+            var wow = new WOW({
+                boxClass: 'wow',
+                animateClass: 'animated',
+                offset: 0,
+                mobile: true,
+                live: true
+            });
+            wow.init();
+            // PJAX
+            $(document).pjax('a[target!=_blank][class!=onPjax]', '.Pjax-content', {
+                fragment: '.Pjax-content',
+                timeout: 3000,
+                maxCacheLength:1,
+                scrollToTop:true
+            });
+            $(document).on('pjax:send', function() {
+                NProgress.start();
+            });
+            $(document).on('pjax:end', function() {
+                NProgress.done();
+                App.Comment();
+                App.MyMacy();
+                App.ListAjax();
+                commentsAjax();
+                App.PublicData();
+                ajax_comment();
+                $('.buttomBg').removeClass('buttomBg-look');
+                OnPopup();
+            });
+        },
+        //     点击id   弹窗id   点前图标  点后图标    弹窗显示动画
+        Popup: {
+            ClickPopup: function(clickId, popupId, iconQClass, iconHClass, lookClass) {
+                var menu = $(clickId),
+                    Popup = $(popupId),
+                    buttomBg = $('.buttomBg');
+                menu.on('click', function() {
+                    if (menu.attr('data-open') == 'false') {
+                        buttomBg.addClass('buttomBg-look');
+                        menu.attr('data-open', 'true').removeClass(iconQClass).addClass(iconHClass);
+                        Popup.addClass(lookClass)
+                    } else {
+                        buttomBg.removeClass('buttomBg-look');
+                        menu.attr('data-open', 'false').removeClass(iconHClass).addClass(iconQClass);
+                        Popup.removeClass(lookClass)
+                    }
+                })
+            },
+            OnPopup: function(clickId, popupId, iconQClass, iconHClass, lookClass) {
+                var menu = $(clickId),
+                    Popup = $(popupId),
+                    buttomBg = $('.buttomBg');
+                menu.attr('data-open', 'false').removeClass(iconHClass).addClass(iconQClass);
+                Popup.removeClass(lookClass);
+
+            }
+        },
+        Scroll: function(BgImgId, BgCssClass) {
+            var iBgCo = $(BgImgId)
+            scrollTop = $(window).scrollTop();
+            if (scrollTop == '0') {
+                iBgCo.removeClass(BgCssClass)
+            } else if (scrollTop = 80) {
+                iBgCo.addClass(BgCssClass)
+            }
+        },
+        ListAjax: function() {
+            var nextButt = $('#listAjax'),
+                list = $('#post-list');
+            // 处理加载pjax冲突
+            $('#listAjax a').addClass('onPjax');
+            nextButt.on('click', 'a', function() {
+                var _herf = this.href;
+                if (_herf != undefined) {
+                    $.ajax({
+                        url: _herf,
+                        type: "get",
+                        beforeSend: function() {},
+                        error: function(request) {},
+                        success: function(data) {
+                            var $res = $(data).find("#post");
+                            $('#post-list').append($res);
+                            macy.runOnImageLoad(function() {
+                                macy.recalculate(true);
+                            }, true);
+                            var newhref = $(data).find('#listAjax > a').attr("href");
+                            if (newhref != undefined) {
+                                $('#listAjax > a').attr("href", newhref);
+                            } else {
+                                $('#listAjax > a').hide();
+                            }
+                        }
+                    });
+                }
+                return false;
+            })
+        },
+        Comment: function() {
+            var commBut = $('.comments-butt'),
+                commCon = $('.comment-content');
+            commBut.on('click', function() {
+                if ($(this).attr('data-open') == 'false') {
+                    $(this).attr('data-open', 'true');
+                    commCon.fadeIn(600);
+                } else {
+                    $(this).attr('data-open', 'false');
+                    commCon.fadeOut(600);
+                }
+            })
+
+        }
+    };
+    // 展开弹窗
+    App.Popup.ClickPopup('#comments', '#share-popup', 'icon-smile', 'icon-close', 'share-popup-look');
+    App.Popup.ClickPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look');
+    App.Popup.ClickPopup('#search', '#searchPopup', 'icon-search', 'icon-close', 'searchPopup-look');
+    // 关闭弹窗
+    function OnPopup(){
+        App.Popup.OnPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look')
+        App.Popup.OnPopup('#search', '#searchPopup', 'icon-search', 'icon-close', 'searchPopup-look')
+        App.Popup.OnPopup('#comments', '#share-popup', 'icon-smile', 'icon-close', 'share-popup-look')
+    }
+    $('.header-right ul li').each(function() {
+        $(this).on('click', 'span', function(e) {
+            if (e.target.id == 'comments') {
+                App.Popup.OnPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look')
+                App.Popup.OnPopup('#search', '#searchPopup', 'icon-search', 'icon-close', 'searchPopup-look')
+            } else if (e.target.id == 'menu') {
+                App.Popup.OnPopup('#search', '#searchPopup', 'icon-search', 'icon-close', 'searchPopup-look')
+                App.Popup.OnPopup('#comments', '#share-popup', 'icon-smile', 'icon-close', 'share-popup-look')
+            } else if (e.target.id == 'search') {
+                App.Popup.OnPopup('#menu', '#nav-popup', 'icon-category', 'icon-close', 'nav-popup-look')
+                App.Popup.OnPopup('#comments', '#share-popup', 'icon-smile', 'icon-close', 'share-popup-look')
+            }
+        })
+    });
+    // 点击黑罩关闭弹窗
+    $('.buttomBg').on('click',function(){
+        OnPopup();
+        $(this).removeClass('buttomBg-look')
+    })
+    // 滚动条事件
+    $(window).scroll(function(e) {
+        App.Scroll('.blog-bg', 'blog-bg-opacity');
+    });
 
 
-})()
+jQuery(document).ready(function($) {
+        App.PublicData();
+        App.MyMacy();
+        commentsAjax();
+        ajax_comment();
+        App.Window();
+        App.ListAjax();
+        App.Comment();
+});
