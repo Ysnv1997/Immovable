@@ -309,7 +309,7 @@ textarea#comment:focus{}
 .commentform-info label{}
 .commentform-info input{background:rgba(255,255,255,.0)!important;border:1px solid #fff!important;width:100%;outline:none;color:#ccc;border:0;-webkit-box-shadow:none;box-shadow:none;background:#eee;font-weight:normal;-webkit-transition:background .5s;-o-transition:background .5s;transition:background .5s;padding:15px 10px;}
 .commentform-info input:placeholder{color:#ccc;}
-.commentBtn{margin-top:25px;overflow:hidden;-webkit-transition:all 0.333s ease,-webkit-box-shadow .25s ease;transition:all 0.333s ease,-webkit-box-shadow .25s ease;-o-transition:all 0.333s ease,box-shadow .25s ease;transition:all 0.333s ease,box-shadow .25s ease;transition:all 0.333s ease,box-shadow .25s ease,-webkit-box-shadow .25s ease;}
+.commentBtn{color:#fff;margin-top:25px;overflow:hidden;-webkit-transition:all 0.333s ease,-webkit-box-shadow .25s ease;transition:all 0.333s ease,-webkit-box-shadow .25s ease;-o-transition:all 0.333s ease,box-shadow .25s ease;transition:all 0.333s ease,box-shadow .25s ease;transition:all 0.333s ease,box-shadow .25s ease,-webkit-box-shadow .25s ease;}
 .commentBtn .btn{float:right;font-size:1.2rem;background:rgba(255,255,255,.0);font-weight:600;color:#444343!important;-webkit-transition:color .5s;-o-transition:color .5s;transition:color .5s;}
 .commentBtn .btn:hover{color:#fff!important;-webkit-transition:color .5s;-o-transition:color .5s;transition:color .5s;}
 .commentBtn .onSubmit{position:absolute;top:-10px;right:15px;}

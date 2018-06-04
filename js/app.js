@@ -5,6 +5,7 @@
             $.ajax({
                 type: "GET",
                 url: $(this).attr('href'),
+                dataType: "html",
                 beforeSend: function() {
                     $body.animate({
                         scrollTop: $('.comments').offset().top - 65
@@ -12,7 +13,6 @@
                     $('#navigation').remove();
                     $('.commentlist').fadeOut(800);
                 },
-                dataType: "html",
                 success: function(out) {
                     var result = $(out).find('.commentlist');
                     var belownav = $(out).find('#navigation');
