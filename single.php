@@ -23,7 +23,7 @@
               <footer class="blog-article-footer">
                 <p class="blog-article-over">
                   <span class="over">感谢观看</span></p>
-                <div class="blog-article-next">
+                <div>
                   <?php nav_link_with_thumb();?></div>
               </footer>
               <?php }?>

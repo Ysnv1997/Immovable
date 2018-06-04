@@ -158,7 +158,7 @@ function nav_link_with_thumb() {
 		$outputimg = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $prev_post->post_content, $matches);
 		$first_img = $matches[1][0];
 		$prev_post->filter = 'sample';
-		$output .= '<div class="blog-article-next-bg" style="background:url(' . $first_img . ');"></div>
+		$output .= '<div class="blog-article-next"><div class="blog-article-next-bg" style="background:url(' . $first_img . ');"></div>
                             <a href="' . get_permalink($prev_post) . '">
                               <div class="blog-article-next-content">
                                 <div>
@@ -166,7 +166,10 @@ function nav_link_with_thumb() {
                                     <p>' . $prev_post->post_title . '</p>
                                 </div>
                               </div>
-                            </a>';
+                            </a></div>';
+	}
+	if ($prev_post->post_content == '') {
+		$output = '';
 	}
 	echo $output;
 }
