@@ -14,8 +14,10 @@
                 <p class="blog-article-time">
                   <a href="">
                     <?php the_time('Y·n·j ')?></a>
+                    <?php if (!is_page()): ?>
                   <span class="left-prefix">
                     <?php the_category('，');?></span>
+                <?php endif;?>
                 </p>
               </header>
               <div class="blog-article-content">
