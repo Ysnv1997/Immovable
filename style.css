@@ -3,7 +3,8 @@
 /********************************************************
 *                   自定义颜色配置
 ********************************************************/
-
+/*网站背景颜色*/
+body{background:rgba(242,242,242,1)!important;}
 /*文字颜色*/
 .blog-article-title,.headerContent,.header-left .MyName a{color:#ff3b30}
 
@@ -18,8 +19,6 @@
 
 /*导航弹窗背景颜色*/
 .nav-popup{background:rgba(242,242,242,1)!important;}
-body{background:rgba(242,242,242,1)!important;}
-
 /***********************
 *       全局配置
 ***********************/
